@@ -12,7 +12,7 @@ class InputHandler:
         return self.keys[key]
 
 
-def player_controls(player):
+def top_down_controls(player):
     keys = pygame.key.get_pressed()
 
     if keys[pygame.K_w]:
