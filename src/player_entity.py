@@ -13,13 +13,16 @@ class PlayerTwo:
     def adjust_color(self, new_color):
         self.player_color = np.clip(new_color, 0.0, 1.0)
 
+    def adjust_size(self, new_size):
+        self.radius = new_size
+
     def draw(self):
         x, y, z = self.position
         glPushMatrix()
         glTranslatef(x, y, z)
         glColor3fv(self.player_color)
         quadric = gluNewQuadric()
-        gluSphere(quadric, self.radius, 20, 20)
+        gluSphere(quadric, self.radius, int(20 * self.radius), int(20 * self.radius))
         gluDeleteQuadric(quadric)
         glPopMatrix()
 
