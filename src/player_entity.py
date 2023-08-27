@@ -22,15 +22,17 @@ class PlayerTwo:
         glTranslatef(x, y, z)
         glColor3fv(self.player_color)
         quadric = gluNewQuadric()
+
+        # Adjusted for smoother interpolation, not sure how it affects performance
         gluSphere(quadric, self.radius, int(20 * self.radius), int(20 * self.radius))
         gluDeleteQuadric(quadric)
         glPopMatrix()
 
     def move(self, direction):
         if direction == "up":
-            self.position[1] -= self.speed
-        elif direction == "down":
             self.position[1] += self.speed
+        elif direction == "down":
+            self.position[1] -= self.speed
 
         elif direction == "left":
             self.position[0] -= self.speed
