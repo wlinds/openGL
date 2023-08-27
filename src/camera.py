@@ -22,10 +22,7 @@ def top_down_follwing(display, player_position, translation=[0, 0, -200]):
         player_position[1] + translation[1],
         player_position[2] + translation[2],
     ]
-    glTranslatef(*camera_position)
-
-    # This approach does not return anything, intead updates position values inside function
-    # Not sure if it might be safer to return values instead??
+    return camera_position
 
 
 # Camera System Boilerplate
