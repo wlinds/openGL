@@ -4,7 +4,8 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 
 from base_grid import GridDrawer
-from camera import basic_static_perspective, top_down_follwing
+from camera import *
+from cube_renderer import CubeRenderer
 from input_handler import first_person_controls, top_down_controls
 from player_entity import PlayerTwo
 
@@ -23,24 +24,50 @@ def run():
     player_two = PlayerTwo()
     clock = pygame.time.Clock()
 
+    cube_renderer = CubeRenderer(
+        grid_spacing=1.0, grid_size=128
+    )  # Testing cubes with perspective change
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 pygame.quit()
                 return
+            elif event.type == pygame.KEYDOWN:
+                if (
+                    event.key == pygame.K_f
+                ):  # !! Only for testing purpose, all keybinds should be in input_handler.py
+                    player_two.toggle_first_person_mode()
 
         # first_person_controls(player_two)
-        top_down_controls(player_two)
+        # top_down_controls(player_two)
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glPushMatrix()
 
-        # Test top_down_following perspective
-        camera_position = top_down_follwing(display, player_two.position)
-        glTranslatef(*camera_position)
+        # Change camera for first_person_mode
+        if player_two.first_person_mode:
+            camera_position = first_person_perspective(
+                display, player_two.position, player_two.rotation
+            )  # Currently updates position in function, does not return anything
+            # glTranslatef(*camera_position)
+
+            first_person_controls(player_two)
+            print(camera_position)
+            print(player_two.rotation)
+
+        else:
+            camera_position = top_down_follwing(display, player_two.position)
+            glTranslatef(*camera_position)
+            top_down_controls(
+                player_two
+            )  # Top_down camera works for both first_person_controls and top_down_controls, really a matter of personal preference.
+            # first_person_controls(player_two)
+            player_two.adjust_size(6.0)
 
         grid_A.draw()
-        player_two.adjust_size(10.0)
+        cube_renderer.render()
+
         player_two.draw()
         glPopMatrix()
         pygame.display.flip()
