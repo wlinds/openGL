@@ -1,0 +1,10 @@
+ruff
+pytest
+pandas
+numpy
+pre-commit
+requests
+pydantic==1.10.10
+pygame
+pyOpenGL
+sounddevice
