@@ -9,6 +9,25 @@ def basic_static_perspective(display, distance=-100):
     return gluPerspective, glTranslatef
 
 
+def top_down_follwing(display, player_position, translation=[0, 0, -200]):
+    aspect_ratio = display[0] / display[1]
+    fov = 45
+    near_clip = 0.1
+    far_clip = 200.0
+    gluPerspective(fov, aspect_ratio, near_clip, far_clip)
+
+    # Calculate the camera position centered on the player
+    camera_position = [
+        player_position[0] + translation[0],
+        player_position[1] + translation[1],
+        player_position[2] + translation[2],
+    ]
+    glTranslatef(*camera_position)
+
+    # This approach does not return anything, intead updates position values inside function
+    # Not sure if it might be safer to return values instead??
+
+
 # Camera System Boilerplate
 class Camera:
     def __init__(self):
