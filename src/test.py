@@ -36,6 +36,8 @@ def run():
         glPushMatrix()
 
         grid_A.draw()
+
+        player_two.adjust_size(10.0)
         player_two.draw()
 
         glPopMatrix()
