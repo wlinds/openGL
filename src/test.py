@@ -5,7 +5,7 @@ from OpenGL.GLU import *
 
 from base_grid import GridDrawer
 from camera import basic_static_perspective
-from input_handler import top_down_controls
+from input_handler import first_person_controls, top_down_controls
 from player_entity import PlayerTwo
 
 
@@ -30,7 +30,8 @@ def run():
                 pygame.quit()
                 return
 
-        top_down_controls(player_two)
+        first_person_controls(player_two)
+        # top_down_controls(player_two)
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glPushMatrix()
