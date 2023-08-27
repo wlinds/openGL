@@ -10,6 +10,7 @@ class PlayerTwo:
         self.speed = 0.1
         self.player_color = np.array([1.0, 1.0, 1.0])
         self.rotation = 0.0
+        self.first_person_mode = False
 
     def adjust_color(self, new_color):
         self.player_color = np.clip(new_color, 0.0, 1.0)
@@ -17,7 +18,14 @@ class PlayerTwo:
     def adjust_size(self, new_size):
         self.radius = new_size
 
+    def toggle_first_person_mode(self):
+        self.first_person_mode = not self.first_person_mode
+        print(f"{self.first_person_mode=}")
+
     def draw(self):
+        if self.first_person_mode:
+            return  # Hide player in first person mode
+
         x, y, z = self.position
         glPushMatrix()
         glTranslatef(x, y, z)
