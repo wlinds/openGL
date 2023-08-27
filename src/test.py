@@ -4,7 +4,7 @@ from OpenGL.GL import *
 from OpenGL.GLU import *
 
 from base_grid import GridDrawer
-from camera import basic_static_perspective
+from camera import basic_static_perspective, top_down_follwing
 from input_handler import first_person_controls, top_down_controls
 from player_entity import PlayerTwo
 
@@ -14,14 +14,13 @@ def run():
     display = (800, 600)
     pygame.display.set_mode(display, pygame.DOUBLEBUF | pygame.OPENGL)
 
-    # Default Camera: Top down view
-    perspective, translation = basic_static_perspective(display, distance=-50)
-    gluPerspective(*perspective)
-    glTranslatef(*translation)
+    # Default Camera: Top down view | Not used - testing top_down_follwing() in the game loop instead
+    # perspective, translation = basic_static_perspective(display, distance=-50)
+    # gluPerspective(*perspective)
+    # glTranslatef(*translation)
 
     grid_A = GridDrawer(grid_spacing=1.0, grid_size=128, grid_color=(0.0, 0.5, 0.5))
     player_two = PlayerTwo()
-
     clock = pygame.time.Clock()
 
     while True:
@@ -30,17 +29,19 @@ def run():
                 pygame.quit()
                 return
 
-        first_person_controls(player_two)
-        # top_down_controls(player_two)
+        # first_person_controls(player_two)
+        top_down_controls(player_two)
 
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
         glPushMatrix()
 
-        grid_A.draw()
+        # Test top_down_following perspective
+        camera_position = top_down_follwing(display, player_two.position)
+        glTranslatef(*camera_position)
 
+        grid_A.draw()
         player_two.adjust_size(10.0)
         player_two.draw()
-
         glPopMatrix()
         pygame.display.flip()
         clock.tick(60)
