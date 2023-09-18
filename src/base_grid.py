@@ -7,7 +7,7 @@ from camera import basic_static_perspective
 
 class GridDrawer:
     """
-    Create a simple wireframe grid plane.
+    Create a simple wireframe plane.
 
     Args:
         grid_spacing (float): The distance between grid lines.
@@ -36,20 +36,15 @@ class GridDrawer:
 
 
 def run_test_grid():
-    pygame.init()
-    display = (800, 600)
-    pygame.display.set_mode(display, pygame.DOUBLEBUF | pygame.OPENGL)
-
     # Top down view
     perspective, translation = basic_static_perspective(display)
     gluPerspective(*perspective)
     glTranslatef(*translation)
 
-    clock = pygame.time.Clock()
-
     # Example grid
     grid_A = GridDrawer(grid_spacing=1.0, grid_size=128, grid_color=(0.0, 0.5, 0.5))
 
+    # Game loop
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -62,8 +57,11 @@ def run_test_grid():
 
         glPopMatrix()
         pygame.display.flip()
-        clock.tick(60)
 
 
 if __name__ == "__main__":
+    pygame.init()
+    display = (800, 600)
+    pygame.display.set_mode(display, pygame.DOUBLEBUF | pygame.OPENGL)
+
     run_test_grid()
