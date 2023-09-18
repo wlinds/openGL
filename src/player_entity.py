@@ -9,8 +9,10 @@ class PlayerTwo:
         self.radius = 0.1
         self.speed = 0.1
         self.player_color = np.array([1.0, 1.0, 1.0])
-        self.rotation = 0.0
-        self.first_person_mode = False
+        self.rotation = 0.0  # jaw
+        self.rotation_y = 0.0  # pitch
+        self.rotation_z = 0.0  # roll
+        self.first_person_mode = Falses
 
     def adjust_color(self, new_color):
         self.player_color = np.clip(new_color, 0.0, 1.0)
