@@ -40,6 +40,16 @@ def first_person_controls(player):
     if keys[pygame.K_d]:
         player.rotation += rotation_speed
 
+    if keys[pygame.K_1]:
+        player.rotation_y -= rotation_speed
+    if keys[pygame.K_2]:
+        player.rotation_y += rotation_speed
+
+    if keys[pygame.K_z]:
+        player.rotation_z -= rotation_speed
+    if keys[pygame.K_x]:
+        player.rotation_z += rotation_speed
+
     # 2D vector for direction in which the player should move
     rotation_radians = np.radians(player.rotation)
     forward_vector = np.array(
